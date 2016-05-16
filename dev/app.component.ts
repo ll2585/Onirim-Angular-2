@@ -1,19 +1,28 @@
 import {Component} from 'angular2/core';
-import {WeatherListComponent} from "./weather/weather-list.component";
-import {WeatherSearchComponent} from "./weather/weather-search.component";
-import {SidebarComponent} from "./sidebar.component";
+
+import {WeatherAppComponent} from "./weather.app.component";
+import {ROUTER_DIRECTIVES, RouteConfig} from "angular2/router";
+import {OnirimAppComponent} from "./onirim.app.component";
 
 @Component({
     selector: 'my-app',
     template: `
         <header>
-            <h1>Angular 2 Weather</h1>
+            <nav>
+                <a [routerLink]="['Onirim']">Onirim</a>
+                <a [routerLink]="['Weather']">Weather</a>
+            </nav>
         </header>
-        <my-sidebar></my-sidebar>
-        <weather-search></weather-search>
-        <weather-list></weather-list>
+        <div class = "main">
+            <router-outlet></router-outlet>
+        </div>
     `,
-    directives: [WeatherListComponent, WeatherSearchComponent, SidebarComponent]
+    directives: [OnirimAppComponent, WeatherAppComponent, ROUTER_DIRECTIVES]
 })
+
+@RouteConfig([
+    {path: '/onirim', name: 'Onirim', component: OnirimAppComponent, useAsDefault: true},
+    {path: '/weather', name: 'Weather', component: WeatherAppComponent}
+])
 export class AppComponent {
 }
